@@ -10,13 +10,28 @@
   background-attachment: fixed;
 }
 
+/* Проверить код(всю страницу) валидатором. Присутствуют критические ошибки(Error) валидации. 
+Исправьте все найденные ошибки.  */
+
+/* Для хедера и футера дает ошибку
+The types are incompatible )) 
+Если я переменную var(--page-padding) заменю на ее значение, то ошибка пропадет.
+Может это проблема валидатора?
+*/
+
+/* Вторая ошибка  
+fit-content не является значением grid-template-rows : 1fr 1fr fit-content
+Я честно перепробовал все другие значнеия, которые знал, но ничего так хорошо не решает
+эту задачу, как этот вариант.
+Подскажите, как можно исправить, пожалуйста.*/
+
 .header {
   position: relative;
   display: grid;
   grid-template-rows: 1fr min-content 1fr;
   justify-items: center;
   align-items: center;
-  block-size: calc(100vh - 2 * var(--page-padding));
+  min-block-size: calc(100vh - 2 * var(--page-padding));
 }
 
 .header__decoration-element {
@@ -40,24 +55,24 @@
   inset-inline-end: -1.15em;
 }
 
-.decorated-zone::before {
+.decorated-zone::before,
+.decorated-zone::after {
   content: "";
   position: absolute;
-  border-inline-end: 1px solid var(--accent-color);
-  border-block-start: 1px solid var(--accent-color);
   inline-size: 25px;
   block-size: 25px;
+}
+
+.decorated-zone::before {
+  border-inline-end: 1px solid var(--accent-color);
+  border-block-start: 1px solid var(--accent-color);
   inset-block-start: 0;
   inset-inline-end: 0;
 }
 
 .decorated-zone::after {
-  content: "";
-  position: absolute;
   border-inline-start: 1px solid var(--accent-color);
   border-block-end: 1px solid var(--accent-color);
-  inline-size: 25px;
-  block-size: 25px;
   inset-block-end: 0;
   inset-inline-start: 0;
 }
@@ -80,8 +95,9 @@
   color: var(--accent-color);
   text-transform: lowercase;
   background-color: transparent;
-  inline-size: 70px;
-  block-size: 26px;
+  cursor: pointer;
+  min-inline-size: 70px;
+  min-block-size: 26px;
 }
 
 .header__theme-menu-button:focus {
@@ -101,12 +117,15 @@
   pointer-events: none;
 }
 
-.header__title {
-  justify-self: left;
+.main-title {
   color: var(--h1-color);
   font-weight: bold;
   font-size: var(--h1-font-size);
   line-height: 85%;
+}
+
+.header__title {
+  justify-self: left;
   text-shadow: 4px 4px 0 var(--accent-color);
 }
 
@@ -129,11 +148,11 @@
   line-height: 130%;
 }
 
-.content__text-block-1-type {
+.content__text-block-divided-into-title-and-content {
   margin-block-start: 50px;
 }
 
-.content__text-block-2-type {
+.content__text-block-with-title-outside {
   margin-block-start: 50px;
 }
 
@@ -145,20 +164,19 @@
   line-height: inherit;
 }
 
-.content__subtitle {
+.content-subtitle {
   margin: 20px 0 10px;
   color: var(--main-color);
-  font-weight: bold;
   font-size: inherit;
   line-height: inherit;
 }
 
+.content__subtitle {
+  font-weight: bold;
+}
+
 .content__plain-subtitle {
-  margin: 20px 0 10px;
-  color: var(--main-color);
   font-weight: normal;
-  font-size: inherit;
-  line-height: inherit;
 }
 
 .content__paragraph {
@@ -168,6 +186,18 @@
 .content__link {
   text-decoration: none;
   text-shadow: 2px 2px 0 var(--accent-color);
+}
+
+.content__link:focus {
+  outline: none;
+}
+
+.content__link:focus-visible {
+  outline: 1px solid var(--text-color);
+}
+
+.content__link:hover {
+  border-block-end: 1px solid var(--text-color);
 }
 
 .content__gallery-block {
@@ -193,16 +223,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  block-size: calc(100vh - 2 * var(--page-padding));
+  min-block-size: calc(100vh - 2 * var(--page-padding));
 }
 
 .footer__title {
-  color: var(--h1-color);
-  font-weight: bold;
-  font-size: var(--h1-font-size);
-  line-height: 85%;
   text-shadow: 2px 2px 0 var(--accent-color);
 }
+
+/* В медиа-запросах обнаружены дубликаты свойств, что 
+не является хорошей практикой. Рекомендуется удалить 
+повторяющиеся свойства и оставить только новые или изменяемые 
+правила внутри @media. Это поможет улучшить читаемость 
+и поддерживаемость кода, а также сократить размер файлов стилей. 
+Кроме того, общие свойства лучше объединить в общий медиа-
+запрос, чтобы избежать повторений и улучшить структуру стилей. */
+
+/*прописал данное свойство сразу трем классам
+ margin-block-start: 80px; 
+ К сожалению, больше дубликатов не увидел, если есть, напишите подробнее*/
 
 @media (width >= 768px) {
   .header__title {
@@ -216,28 +254,26 @@
     inline-size: clamp(22.75rem, -1.438rem + 50.391vw, 30.813rem);
   }
 
-  .content__text-block-1-type {
+  .content__text-block-divided-into-title-and-content {
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr;
     gap: 20px;
+  }
+
+  .content__text-block-with-title-outside,
+  .content__text-block-divided-into-title-and-content,
+  .content__gallery-block {
     margin-block-start: 80px;
   }
 
-  .content__text-block-2-type {
-    margin-block-start: 80px;
-  }
-
-  .content__text-block-1-type .content__subtitle:first-of-type {
+  .content__text-block-divided-into-title-and-content
+    .content__subtitle:first-of-type {
     margin-block-start: 0;
   }
 
-  .content__text-block-2-type .content__title {
+  .content__text-block-with-title-outside .content__title {
     inline-size: min-content;
-  }
-
-  .content__gallery-block {
-    margin-block-start: 80px;
   }
 
   .content__gallery {
@@ -294,11 +330,11 @@
     flex-direction: row;
   }
 
-  .content__text-block-1-type {
+  .content__text-block-divided-into-title-and-content {
     gap: 10px;
   }
 
-  .content__text-block-2-type {
+  .content__text-block-with-title-outside {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: min-content 1fr;
@@ -308,7 +344,7 @@
     gap: 20px;
   }
 
-  .content__text-block-2-type .content__title {
+  .content__text-block-with-title-outside .content__title {
     grid-area: title;
     margin-block-end: 0;
     inline-size: 100%;

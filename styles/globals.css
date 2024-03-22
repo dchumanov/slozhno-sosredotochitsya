@@ -6,6 +6,7 @@
   box-sizing: border-box;
 }
 
+/* Спасибо за комментарий, буду иметь в виду. Здесь же использовал проектную заготовку */
 body {
   min-inline-size: 375px;
   max-inline-size: 1440px;
