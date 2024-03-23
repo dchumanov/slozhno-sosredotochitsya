@@ -1,55 +1,16 @@
-/* Проверить код(всю страницу) валидатором. 
-Присутствуют критические ошибки(Error) валидации. 
-Исправьте все найденные ошибки.  */
-
-/* Валидатор выдает ошибку разбора, без конкретики. 
-Возможно ему не нравятся переменные?  Можете пояснить? */
-
-/* Комментарий к исправлению: В файле содержится значительное
- количество общих стилей, которые не привязаны к конкретной
-  теме. Хорошей практикой будет вынести эти общие стили 
-  в отдельный файл (например, style.css) и оставить в данном 
-  файле только те стили, которые непосредственно относятся 
-  к данной теме и влияют на её отображение. Это улучшит 
-  структуру и поддерживаемость вашего кода, делая его более 
-  организованным и читаемым. */
-
-/* В настройках операционной системы менял темы отображения со светлой на темную
-и наоборот, и именно в связи с этим здесь находятся эти правила,
-так, например, если выбрать светлую тему операционной системы и включить тему "неон",
-то без правил ниже часть элементов будет нечитаема. Аналогично в файле "light.css"
-Если логика друга, прошу пояснить.
-*/
-
 .page.theme_dark {
-  --text-color: #f1b2ce;
+  --h1-color: #db00ff;
+  --h1-shadow-color: #ff0070;
   --accent-color: #ff0070;
   --accent-color-rgb: 255, 0, 112;
-  --h1-color: #db00ff;
-  --main-color: #000028;
+  --titles-color: #ff0070;
+  --subtitles-color: #000028;
+  --text-color: #f1b2ce;
+  --decorated-elements-color: #ff0070;
+  --decorated-elements-color-rgb: 255, 0, 112;
   --cover-image: url(../images/cover-image-dark.png);
-
-  .content__title {
-    color: var(--accent-color);
-  }
-
+ 
   .header__decoration-element {
     display: block;
-  }
-
-  .header__theme-menu-button {
-    color: var(--accent-color);
-  }
-
-  .header__theme-menu-button:focus-visible {
-    border-bottom: 1px solid var(--accent-color);
-  }
-
-  .header__theme-menu-button:hover {
-    border: 1px solid rgba(var(--accent-color-rgb), 0.4);
-  }
-
-  .header__theme-menu-button_active {
-    border: 1px solid var(--accent-color);
-  }
+}
 }
